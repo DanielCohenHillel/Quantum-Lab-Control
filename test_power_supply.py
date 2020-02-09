@@ -18,7 +18,7 @@ import time
 rm = pyvisa.ResourceManager()
 
 ins = "USB0::0x0483::0x7540::SPD30GB3150177::INSTR"
-print(type(rm.list_resources()[0]))
+# print(type(rm.list_resources()[0]))
 instrument = rm.open_resource(ins)
 # Try to communicate with the instrument and get it's name
 try:
@@ -37,7 +37,7 @@ try:
 except pyvisa.VisaIOError:
     # Failed to connect
     print("* No connection to ", instrument, "\n")
-    
+
 instrument.write("CH1:VOLT 0.4321")
 time.sleep(0.1)
 instrument.write("CH1:VOLT?")

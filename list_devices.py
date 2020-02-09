@@ -19,7 +19,7 @@ for ins in instruments:
         instrument.write_termination = '\n'
 
         instrument.write("*IDN?")
-        time.sleep(1)  # Sleep timeout for old instruments
+        time.sleep(0.1)  # Sleep timeout for old instruments
         # idn = instrument.read()
         print("*", str(ins), "   is ", str(instrument.read()), "\n")
     except pyvisa.VisaIOError:

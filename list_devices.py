@@ -1,13 +1,10 @@
-import numpy as np
-import scipy as sp
 import pyvisa
-import visa
 import time
 
 # Open the default visa resource manager
 rm = pyvisa.ResourceManager()
 # List of all instruments
-instruments = np.array(rm.list_resources())
+instruments = rm.list_resources()
 
 # Print all connected visa devices and if they're reachable
 print("             All Resources")
@@ -25,6 +22,6 @@ for ins in instruments:
         time.sleep(1)  # Sleep timeout for old instruments
         # idn = instrument.read()
         print("*", str(ins), "   is ", str(instrument.read()), "\n")
-    except visa.VisaIOError:
+    except pyvisa.VisaIOError:
         # Failed to connect
         print("* No connection to ", instrument, "\n")

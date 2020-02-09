@@ -81,11 +81,13 @@ Example
 -------
 ```py
 import numpy as np
-import experiment as exp
+from experiment import Experiment
 
+# Addresses of power supply and oscilloscope
 in_address = "USB0::0x0483::0x7540::SPD30GB3150177::INSTR"
 out_address = "USB0::0x0957::0x17A6::MY54351085::0::INSTR"
 
+# Measure over different voltages between 0 and 1 volt
 v = np.linspace(0, 1, 10)
 
 config = {
@@ -114,5 +116,10 @@ config = {
     }
 }
 
+# Create an experiment object with my experiment
+my_experiment = Experiment(config)
+
+# Do the experiment and measure the results into the result variable
+result = my_experiment.measure()
 ```
 <!-- TODO: Change output in config>

@@ -4,6 +4,7 @@ import matplotlib as plt
 import matplotlib.pyplot as plt
 import pyvisa
 import time
+from itertools import product
 
 
 class Experiment:
@@ -43,10 +44,9 @@ class Experiment:
         # Setup resource manager to manage all the instrument and their connections
         rm = pyvisa.ResourceManager()
 
+        # TODO: Maybe combine the input and output initilization
         # Initilazation
-        # Input
-        input_devices = config["input"]
-        for i, dev_conf in input_devices.items():
+        for i, dev_conf in config.items():
             address = dev_conf["address"]
 
             device = rm.open_resource(address)
@@ -57,13 +57,45 @@ class Experiment:
                 device.write_termination = '\n'
 
                 device.write("*IDN?")
-                time.sleep(0.1)  # Sleep timeout for old instruments
+                time.sleep(0.1) 
                 print("* Connected successfully to ", device.read(), "!!")
             except pyvisa.VisaIOError:
                 print("Couln't connect to device with VISA address", address, "check that it is properly"
                 "connected. You can use the list_devices.py script to check all available devices")
-            print("Do some stuff")
+                return 1
 
+            try:
+                # Initilize
+                for key, value in dev_conf["init"].items():
+                    # print(command + " "+ str(value))
+                    command = key + " " + str(value)
+                    device.write(command)
+                    time.sleep(0.1)
+            except pyvisa.VisaIOError:
+                print("There was an error when initilizing the instruments")
+
+            # Run system change 
+            # Run measurement
+            for keyy, val in dev_conf["meas"].items():
+                for key, values in dev_conf["vars"].items():
+                    var_combinations = list(product(*values))
+                    # print(var_combinations)
+                    for combination in var_combinations:
+                        # print(combination)
+                        command = key.format(*combination)
+                        print(command)
+                        device.write(command)
+                        time.sleep(0.1) # TODO: Maybe need to change the delay to wait for the device to finish
+
+                        # for v in value:
+                        # command = key
+                        # print(command)
+                        # device.write(val)
+                        time.sleep(0.1) # TODO: Maybe need to change the delay to wait for the device to finish
+                        # print(device.read())
+
+        
+        print("Do some stuff")
         result = 0
         return result
 

@@ -3,6 +3,7 @@ import scipy as sp
 import matplotlib as plt
 import matplotlib.pyplot as plt
 import pyvisa
+import time
 
 
 class Experiment:

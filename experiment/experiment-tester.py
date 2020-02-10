@@ -39,7 +39,7 @@ config = {
 
 def main():
     test = exp.Experiment(config)
-    print(test)
+    print(test.measure())
 
 if __name__ == '__main__':
     print("             ----  Run Main  ----\n")

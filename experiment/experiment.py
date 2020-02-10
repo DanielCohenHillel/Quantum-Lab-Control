@@ -58,7 +58,7 @@ class Experiment:
 
                 device.write("*IDN?")
                 time.sleep(0.1) 
-                print("* Connected successfully to ", device.read(), "!!")
+                print("\n\n* Connected successfully to ", device.read(), "\n")
             except pyvisa.VisaIOError:
                 print("Couln't connect to device with VISA address", address, "check that it is properly"
                 "connected. You can use the list_devices.py script to check all available devices")
@@ -74,26 +74,15 @@ class Experiment:
             except pyvisa.VisaIOError:
                 print("There was an error when initilizing the instruments")
 
-            # Run system change 
             # Run measurement
-            for keyy, val in dev_conf["meas"].items():
-                for key, values in dev_conf["vars"].items():
-                    var_combinations = list(product(*values))
-                    # print(var_combinations)
-                    for combination in var_combinations:
-                        # print(combination)
-                        command = key.format(*combination)
-                        print(command)
-                        device.write(command)
-                        time.sleep(0.1) # TODO: Maybe need to change the delay to wait for the device to finish
-
-                        # for v in value:
-                        # command = key
-                        # print(command)
-                        # device.write(val)
-                        time.sleep(0.1) # TODO: Maybe need to change the delay to wait for the device to finish
-                        # print(device.read())
-
+            com, variables = dev_conf["vars"]
+            
+            var_combinations = list(product(*variables))
+            for combination in var_combinations:
+                command = com.format(*combination)
+                print(command)
+                # device.write(command)
+                time.sleep(3) # TODO: Maybe need to change the delay to wait for the device to finish
         
         print("Do some stuff")
         result = 0

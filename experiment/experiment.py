@@ -91,6 +91,7 @@ class Experiment:
         # return result
 
         states = []
+        # states_values = []
         address_state = []
         for i, dev_conf in config.items():
             # print(dev_conf)
@@ -100,9 +101,10 @@ class Experiment:
                 state_com = []
                 for v in product(*value):
                     state_com.append(com.format(*v))
+                    # states_values.append(v)
                 states.append(state_com)
                 address_state.append(dev_conf.get("address"))
-
+        print(states_values)
         full_States = list(product(*states))
         for state in full_States:
             print("\nSet State\n---------")

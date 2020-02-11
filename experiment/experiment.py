@@ -105,10 +105,20 @@ class Experiment:
 
         full_States = list(product(*states))
         for state in full_States:
+            print("\nSet State\n---------")
             for i, command in enumerate(state):
-                print(command, " ---> ", address_state[i])
-            print("meaure! \n")
-        # for i, dev_conf in config.items():
+                print(command, "-"*(40 - len(command)) +
+                      "> ", address_state[i])
+                # TODO: Add here device write command
+
+            print("\nMeaure\n-------")
+            for i, dev_conf in config.items():
+                for tran_type, command in dev_conf["meas"].items():
+                    com_str = tran_type + " || " + command
+                    print(com_str,
+                          "-"*(40 - len(com_str)) + "> ", address_state[i])
+                    # TODO: Add measure command here
+                # for i, dev_conf in config.items():
         return 0
 
     def make_file(self):

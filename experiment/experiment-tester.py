@@ -8,7 +8,7 @@ import experiment as exp
 in_address = "USB0::0x0483::0x7540::SPD30GB3150177::INSTR"
 out_address = "USB0::0x0957::0x17A6::MY54351085::0::INSTR"
 
-v = np.linspace(0, 1, 5)
+v = np.linspace(0, 1, 11)
 '''
     TODO:
     Need to make it so you can get every possible instrument state and then measure,
@@ -28,25 +28,25 @@ config = {
         },
         "vars": {
             "CH1:VOLT {}": (v,),
-            # "CH2:VOLT {}": (v,)
+            "CH2:ffVOLT {}": (v,)
         },
 
         "meas": {
-            "BIN": "CH1:VOLT?"  # BIN / ASCII
+            "BIN  ": "CH1:VOLT?"  # BIN / ASCII
         }
     },
-    1: {
-        "address": out_address,
-        "init": {
-            "command": "command"
-        },
-        "vars": {
-            "command {} || {}": (["command", "oth"], ["other"])
-        },
-        "meas": {
-            "command": "command"
-        }
-    }
+    # 1: {
+    #     "address": out_address,
+    #     "init": {
+    #         "command": "command"
+    #     },
+    #     "vars": {
+    #         "command {}": (["command"],)
+    #     },
+    #     "meas": {
+    #         "ASCII": "measure"
+    #     }
+    # }
     # },
     # "output": {
     #     0:{

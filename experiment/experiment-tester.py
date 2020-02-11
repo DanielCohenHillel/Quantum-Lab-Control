@@ -28,7 +28,7 @@ config = {
         },
         "vars": {
             "CH1:VOLT {}": (v,),
-            "CH2:ffVOLT {}": (v,)
+            # "CH2:ffVOLT {}": (v,)
         },
 
         "meas": {

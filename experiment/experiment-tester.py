@@ -1,8 +1,10 @@
-import pyvisa
-import numpy as np
-import scipy as sp
+# Imports
 import matplotlib as mpl
 import matplotlib.pyplot as plt
+import numpy as np
+import pyvisa
+import scipy as sp
+
 import experiment as exp
 
 in_address = "USB0::0x0483::0x7540::SPD30GB3150177::INSTR"
@@ -19,47 +21,21 @@ v = np.linspace(0, 1, 11)
 
     add measurement that distinguishes between BIN and ASCII.
 '''
+
 config = {
-    # "input":{
     0: {
         "address": in_address,
         "init": {
-            "CH1:VOLT 0.5; CH2:VOLT": 0.0
+            "CH1:VOLT": 0.1
         },
         "vars": {
-            "CH1:VOLT {}": (v,),
-            # "CH2:ffVOLT {}": (v,)
+            "CH1:VOLT {}": (v,)
         },
 
         "meas": {
-            "BIN  ": "CH1:VOLT?"  # BIN / ASCII
+            "BIN  ": "CH1:VOLT?"
         }
     },
-    # 1: {
-    #     "address": out_address,
-    #     "init": {
-    #         "command": "command"
-    #     },
-    #     "vars": {
-    #         "command {}": (["command"],)
-    #     },
-    #     "meas": {
-    #         "ASCII": "measure"
-    #     }
-    # }
-    # },
-    # "output": {
-    #     0:{
-    #         "address": out_address,
-    #         "init": {
-    #             "conf_command": "command"
-    #         },
-    #         "variables":{
-    #             "command": "command_var"
-    #         }
-
-    #     }
-    # }
 }
 
 

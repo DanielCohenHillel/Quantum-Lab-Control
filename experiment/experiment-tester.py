@@ -21,24 +21,29 @@ v = np.linspace(0, 1, 5)
 '''
 config = {
     # "input":{
-    0:{
+    0: {
         "address": in_address,
-        "init":{
+        "init": {
             "CH1:VOLT 0.5; CH2:VOLT": 0.0
         },
-        "vars": ("CH1:VOLT {}; CH2:VOLT {}", (v,v)),
-        
-        "meas":{
+        "vars": {
+            "CH1:VOLT {}": (v,),
+            # "CH2:VOLT {}": (v,)
+        },
+
+        "meas": {
             "BIN": "CH1:VOLT?"  # BIN / ASCII
         }
     },
-    1:{
+    1: {
         "address": out_address,
-        "init":{
-            "command": "command" 
+        "init": {
+            "command": "command"
         },
-        "vars": ("command {}", (["command"],)),
-        "meas":{
+        "vars": {
+            "command {} || {}": (["command", "oth"], ["other"])
+        },
+        "meas": {
             "command": "command"
         }
     }
@@ -52,7 +57,7 @@ config = {
     #         "variables":{
     #             "command": "command_var"
     #         }
- 
+
     #     }
     # }
 }
@@ -61,6 +66,7 @@ config = {
 def main():
     test = exp.Experiment(config)
     print(test.measure())
+
 
 if __name__ == '__main__':
     print("             ----  Run Main  ----\n")

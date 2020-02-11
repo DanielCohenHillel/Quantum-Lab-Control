@@ -151,14 +151,18 @@ class Experiment:
                           "-"*(40 - len(com_str)) + "> ", address_state[i])
                     # TODO: Add measure command here
                     # print(i)
+                    device_state[i].read_termination = '\n'
+                    device_state[i].write_termination = '\n'
                     device_state[i].write(str(command))
-                    time.sleep(0.01)
-                    measured_test.append(float(device_state[i].read()))
-                    print(measured_test[len(measured_test)-1])
-                    time.sleep(0.01)
+                    time.sleep(0.1)
+                    res = device_state[i].read()
+                    # print(res)
+                    measured_test.append(float(res))
+                    # print(measured_test[len(measured_test)-1])
+                    time.sleep(0.1)
                 # for i, dev_conf in config.items():
-        print(len(voltages))
-        print(measured_test)
+        # print(len(voltages))
+        # print(measured_test)
         plt.plot(voltages, measured_test)
         plt.show()
 
